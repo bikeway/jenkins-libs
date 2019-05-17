@@ -11,22 +11,22 @@ def call(Map buildEnv){
             def PATH_TO_TAMPLATE_BASE       = getParameterValue(buildEnv, 'PATH_TO_TAMPLATE_BASE')
         }
 
-        post {  //Р’С‹РїРѕР»РЅСЏРµС‚СЃСЏ РїРѕСЃР»Рµ СЃР±РѕСЂРєРё
+        post {  //Выполняется после сборки
             always {
-                // junit. РїРѕРґСЃРєР°Р·РєР°: testResults: '**/out/junit/*.xml'
-                // allure РџРѕРґСЃРєР°Р·РєР° results: [[path: 'out/allure'], [path: 'out/addallure.xml']]
+                // junit. подсказка: testResults: '**/out/junit/*.xml'
+                // allure Подсказка results: [[path: 'out/allure'], [path: 'out/addallure.xml']]
             }
             failure {
-                cmdRun("echo РЎРѕРѕР±С‰РµРЅРёРµ РІС‹РІРѕРґРёС‚СЃСЏ РїСЂРё РѕС€РёР±РєРµ")      
+                cmdRun("echo Сообщение выводится при ошибке")      
             }
             success {
-               // Р’СЃРµ С…РѕСЂРѕС€Рѕ)
+               // Все хорошо)
             } 
         }
     
         stages {
             
-            stage("РћР±РЅРѕРІР»РµРЅРёРµ С‚РµСЃС‚РѕРІРѕРіРѕ РєРѕРЅС‚СѓСЂР°") {
+            stage("Обновление тестового контура") {
                 steps {                      
                     timestamps {
                         script{
@@ -39,7 +39,7 @@ def call(Map buildEnv){
                 }
             }
 
-            stage('РЎРёРЅС‚Р°РєСЃРёС‡РµСЃРєР°СЏ РїСЂРѕРІРµСЂРєР°'){
+            stage('Синтаксическая проверка'){
                 steps {
                     timestamps {
                         script{
@@ -58,7 +58,7 @@ def call(Map buildEnv){
                 }
             }
             
-            stage('Р”С‹РјРѕРІРѕРµ С‚РµСЃС‚РёСЂРѕРІР°РЅРёРµ'){
+            stage('Дымовое тестирование'){
                 steps {
                     timestamps {
                         script{
@@ -78,7 +78,7 @@ def call(Map buildEnv){
                 }
             }
 
-            stage('Р¤СѓРЅРєС†РёРѕРЅР°Р»СЊРЅРѕРµ С‚РµСЃС‚РёСЂРѕРІР°РЅРёРµ'){
+            stage('Функциональное тестирование'){
                 steps {
                     timestamps {
                         script{
@@ -96,7 +96,7 @@ def call(Map buildEnv){
                 }
             }
             
-            stage('РЎР±РѕСЂРєР° РїРѕСЃС‚Р°РІРєРё'){
+            stage('Сборка поставки'){
                 steps {
                     timestamps {
                         script{
@@ -121,7 +121,7 @@ def call(){
     call([:])  
 }
 
-// РџРѕРґРіРѕС‚Р°РІР»РёРІР°РµРј С‚РµСЃС‚РѕРІСѓСЋ Р±Р°Р·Сѓ Рє СЂР°Р±РѕС‚Рµ
+// Подготавливаем тестовую базу к работе
 def prepareBase(Map buildEnv){
     def connectionString = getConnectionString(buildEnv)
     if (fileExists("${PATH_TO_TAMPLATE_BASE}")) { 
@@ -145,7 +145,7 @@ def syntaxCheck(Map buildEnv) {
     
 }
 
-// Р”С‹РјРѕРІРѕРµ С‚РµСЃС‚РёСЂРѕРІР°РЅРёРµ (BDD)
+// Дымовое тестирование (BDD)
 def tddTesting(Map buildEnv){   
     
 }

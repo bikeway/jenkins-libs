@@ -3,18 +3,18 @@ String call(Map buildParams, String keyName){
    
     def defaultParams = getDefaultParams()
     if(env."${keyName}" != null ){
-        println "ENV: РґР»СЏ РєР»СЋС‡Р° ${keyName} РЅР°Р№РґРµРЅРѕ Р·РЅР°С‡РµРЅРёРµ " +  env."${keyName}"
+        println "ENV: для ключа ${keyName} найдено значение " +  env."${keyName}"
         return env."${keyName}"
     }else{
         if(buildParams."${keyName}" != null ){
-            println "buildParams: РґР»СЏ РєР»СЋС‡Р° ${keyName} РЅР°Р№РґРµРЅРѕ Р·РЅР°С‡РµРЅРёРµ " +  buildParams."${keyName}"
+            println "buildParams: для ключа ${keyName} найдено значение " +  buildParams."${keyName}"
             return buildParams."${keyName}"
         }
         if(defaultParams."${keyName}" != ''){
-            println "defaultParams: РґР»СЏ РєР»СЋС‡Р° ${keyName} РЅР°Р№РґРµРЅРѕ Р·РЅР°С‡РµРЅРёРµ " +  defaultParams."${keyName}"
+            println "defaultParams: для ключа ${keyName} найдено значение " +  defaultParams."${keyName}"
             return defaultParams."${keyName}"
         }
-        println "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РєР»СЋС‡Р° РЅРµ РЅР°Р№РґРµРЅРѕ ${keyName} РІРѕР·РІСЂР°С‰Р°РµРј РїСѓСЃС‚СѓСЋ СЃС‚СЂРѕРєСѓ"
+        println "Значение для ключа не найдено ${keyName} возвращаем пустую строку"
         return new String()
     }
 }
@@ -23,27 +23,27 @@ String call(Map buildParams, String keyName){
 def getDefaultParams(){
     return [
         // General
-        'IS_FILE_CONTUR': 'true', //Р’С‹РїРѕР»РЅРµРЅРёРµ Р·Р°РґР°С‡Рё РЅР° С„Р°Р№Р»РѕРІРѕР№ Р±Р°Р·Рµ
-        'FILE_BASE_PATH': './build/ib', // 'РџСѓС‚СЊ Рє С„Р°Р№Р»РѕРІРѕР№ Р±Р°Р·Рµ'
-        'USING_DOCKER': 'false', // Р’С‹РїРѕР»РЅСЏС‚СЊ Р·Р°РґР°С‡Сѓ РІ РєРѕРЅС‚РµР№РЅРµСЂРµ DOCKER
-        'SEND_EMAIL': 'false', // Р Р°СЃСЃС‹Р»РєР° РѕРїРѕРІРµС‰РµРЅРёСЏ РЅР° РїРѕС‡С‚Сѓ
-        'EMAILS_FOR_NOTIFICATION':"", // РџРѕС‡С‚РѕРІС‹Р№ СЏС‰РёРє РґР»СЏ СѓРІРµРґРѕРјР»РµРЅРёР№
-        'AGENT': 'windows', // РђРіРµРЅС‚
-        'V8VERSION': "8.3", // Р’РµСЂСЃРёСЏ РїР»Р°С‚С„РѕСЂРјС‹
-        'DB_USER_CREDENTIONALS_ID': "", // РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РёРЅС„РѕСЂРјР°С†РёРѕРЅРЅРѕР№ Р±Р°Р·С‹
+        'IS_FILE_CONTUR': 'true', //Выполнение задачи на файловой базе
+        'FILE_BASE_PATH': './build/ib', // 'Путь к файловой базе'
+        'USING_DOCKER': 'false', // Выполнять задачу в контейнере DOCKER
+        'SEND_EMAIL': 'false', // Рассылка оповещения на почту
+        'EMAILS_FOR_NOTIFICATION':"", // Почтовый ящик для уведомлений
+        'AGENT': 'windows', // Агент
+        'V8VERSION': "8.3", // Версия платформы
+        'DB_USER_CREDENTIONALS_ID': "", // Идентификатор Аутентификации пользователя информационной базы
 
         // Gitsync
-        'PATH_TO_GITSYNC_CONF': './tools/JSON/gitsync_conf.JSON', // РџСѓС‚СЊ Рє РєРѕРЅС„РёРіСѓСЂР°С†РёРѕРЅРЅРѕРјСѓ С„Р°Р№Р»Сѓ GITSYNC
+        'PATH_TO_GITSYNC_CONF': './tools/JSON/gitsync_conf.JSON', // Путь к конфигурационному файлу GITSYNC
         
         //Ci
         'PATH_TO_TAMPLATE_BASE' :'./examples/demo.dt',
-        'SOURCE_PATH':'./src/cf', // РџСѓС‚СЊ Рє С€Р°Р±Р»РѕРЅСѓ Р±Р°Р·С‹.
-        'UCCODE': 'locked', // РџР°СЂРѕР»СЊ Р±Р»РѕРєРёСЂРѕРІРєРё РёРЅС„РѕСЂРјР°С†РёРѕРЅРЅРѕР№ Р±Р°Р·С‹ 
-        'LOCK_MESSAGE': 'Р РµРіР»Р°РјРµРЅС‚РЅС‹Рµ СЂР°Р±РѕС‚С‹ РљРѕРЅС‚СѓСЂРѕРј CI',
-        'VRUNNER_CONF': 'tools/JSON/vRunner.json', // РџСѓС‚СЊ Рє РєРѕРЅС„РёРіСѓСЂР°С†РёРѕРЅРЅРѕРјСѓ С„Р°Р№Р»Сѓ vrunner
-        'PROCEDURE_SINTAX_CHECK': 'false', // Р’С‹РїРѕР»РЅСЏС‚СЊ СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєСѓСЋ РїСЂРѕРІРµСЂРєСѓ СЃСЂРµРґСЃС‚РІР°РјРё 1СЃ
-        'PROCEDURE_TDD_TEST': 'false', // Р’С‹РїРѕР»РЅСЏС‚СЊ TDD С‚РµСЃС‚РёСЂРѕРІР°РЅРёРµ
-        'PROCEDURE_BDD_TEST': 'false' // Р’С‹РїРѕР»СЏС‚СЊ BDD С‚РµСЃС‚РёСЂРѕРІР°РЅРёРµ
+        'SOURCE_PATH':'./src/cf', // Путь к шаблону базы.
+        'UCCODE': 'locked', // Пароль блокировки информационной базы 
+        'LOCK_MESSAGE': 'Регламентные работы Контуром CI',
+        'VRUNNER_CONF': 'tools/JSON/vRunner.json', // Путь к конфигурационному файлу vrunner
+        'PROCEDURE_SINTAX_CHECK': 'false', // Выполнять синтаксическую проверку средствами 1с
+        'PROCEDURE_TDD_TEST': 'false', // Выполнять TDD тестирование
+        'PROCEDURE_BDD_TEST': 'false' // Выполять BDD тестирование
 
     ]
 }
