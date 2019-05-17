@@ -8,7 +8,7 @@ def call(Map buildEnv){
             label getParameterValue(buildEnv, 'AGENT')
         } 
 
-        post {  //Р’С‹РїРѕР»РЅСЏРµС‚СЃСЏ РїРѕСЃР»Рµ СЃР±РѕСЂРєРё
+        post {  //Выполняется после сборки
             failure {
                 sendEmailMessage("failed", buildEnv.EMAILS_FOR_NOTIFICATION)
             }
@@ -30,7 +30,7 @@ def call(Map buildEnv){
                             comandGitsync = "gitsync %userCredentionalID% -v --v8version ${V8VERSION} --ibconnection ${connectionString}  all ${PATH_TO_GITSYNC_CONF}"                
                             println USING_DOCKER.getClass().toString()
                             if (USING_DOCKER.trim().equals("true")){                             
-                                println 'Р›РѕРі: Р—Р°РїСѓСЃРє СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё РІ РєРѕРЅС‚РµР№РЅРµСЂРµ docker'
+                                println 'Лог: Запуск синхронизации в контейнере docker'
                                 // execGitsyncDocker(buildEnv, comandGitsync)
                             }else{ 
                                 try{
@@ -43,7 +43,7 @@ def call(Map buildEnv){
                             }
                         
                         }else{
-                            println "РљРѕРЅС„РёРіСѓСЂР°С†РёРѕРЅРЅС‹Р№ С„Р°Р№Р» gitsync РїРѕ РїСѓС‚Рё ${PATH_TO_GITSYNC_CONF} РЅРµ РЅР°Р№РґРµРЅ "
+                            println "Конфигурационный файл gitsync по пути ${PATH_TO_GITSYNC_CONF} не найден "
                             currentBuild.result = 'FAILURE'
                         }
                     }
@@ -57,6 +57,6 @@ def call(){
     call([:])  
 }
 
-def Р’С‹РїРѕР»РЅРёС‚СЊ(Map buildEnv){
+def Выполнить(Map buildEnv){
     call(buildEnv)
 }

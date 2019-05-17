@@ -1,6 +1,6 @@
-// Р¤СѓРЅРєС†РёСЏ РёСЃРїРѕР»РЅРµРЅРёСЏ РєРѕРјР°РЅРґ. РЈСЃС‚Р°РЅРѕРІРєР° Р»РѕРєР°Р»РёР·Р°С†РёРё РїСЂРё РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРё MS Windows
+// Функция исполнения команд. Установка локализации при использовании MS Windows
 
-// РџСЂРёРјРµСЂ РІС‹Р·РѕРІР°: cmdRun.Р’С‹РїРѕР»РЅРёС‚СЊ("dir /w")
+// Пример вызова: cmdRun.Выполнить("dir /w")
 
 def call(String _command){
     command = _command.replace("%userCredentionalID%", "")
@@ -24,7 +24,7 @@ def call(String _command, String credentionalID){
         try{
             AuthBase = AuthBase + "  --db-pwd " + PASSWORD  
         }catch ( e ) {
-            // РЅРёС‡РµРіРѕ РЅРµ РґРѕР±Р°РІР»СЏРµРј  
+            // ничего не добавляем  
         } 
         command = _command.replace("%userCredentionalID%", AuthBase)
 
@@ -36,7 +36,7 @@ def call(String _command, String credentionalID){
     }     
 }
 
-def Р’С‹РїРѕР»РЅРёС‚СЊ(def РљРѕРјР°РЅРґР°РЎРёСЃС‚РµРјС‹) {
-   call(РљРѕРјР°РЅРґР°РЎРёСЃС‚РµРјС‹) 
+def Выполнить(def КомандаСистемы) {
+   call(КомандаСистемы) 
 }
 
